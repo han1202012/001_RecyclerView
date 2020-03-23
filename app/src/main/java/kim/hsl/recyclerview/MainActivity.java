@@ -44,12 +44,6 @@ public class MainActivity extends AppCompatActivity {
      */
     public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-        /**
-         * 初始化布局文件
-         * @param parent
-         * @param viewType
-         * @return
-         */
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -58,28 +52,16 @@ public class MainActivity extends AppCompatActivity {
             return new ViewHolder(root_view);
         }
 
-        /**
-         * 设置每个列表项的显示内容
-         * @param holder
-         * @param position
-         */
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.text.setText("" + position);
         }
 
-        /**
-         * 获取列表项个数
-         * @return
-         */
         @Override
         public int getItemCount() {
             return 10;
         }
 
-        /**
-         * 布局容器
-         */
         public class ViewHolder extends RecyclerView.ViewHolder {
             TextView text;
 
