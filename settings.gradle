@@ -1,2 +1,2 @@
-include ':app'
+include ':000_LinearLayout',':001_GridLayout'
 rootProject.name='001_RecyclerView'
