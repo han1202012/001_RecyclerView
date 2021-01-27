@@ -22,14 +22,22 @@ public class MainActivity extends AppCompatActivity {
         //1 . 从布局中获取 RecyclerView
         RecyclerView recycler_view = findViewById(R.id.recycler_view);
 
-
         //2 . 创建并设置布局管理器
         //创建布局管理器
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        /*GridLayoutManager layoutManager = new GridLayoutManager(
+                this,
+                3,
+                RecyclerView.VERTICAL,
+                false);*/
+
+        GridLayoutManager layoutManager = new GridLayoutManager(
+                this,
+                3,
+                RecyclerView.HORIZONTAL,
+                false);
 
         //设置布局管理器
         recycler_view.setLayoutManager(layoutManager);
-
 
         //3 . 创建并设置列表适配器
         Adapter adapter = new Adapter();
