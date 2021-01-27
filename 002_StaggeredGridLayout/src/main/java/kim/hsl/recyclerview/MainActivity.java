@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,17 +24,13 @@ public class MainActivity extends AppCompatActivity {
 
         //2 . 创建并设置布局管理器
         //创建布局管理器
-        GridLayoutManager layoutManager = new GridLayoutManager(
-                this,
+        /*StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
                 3,
-                RecyclerView.VERTICAL,
-                false);
+                RecyclerView.VERTICAL);*/
 
-        /*GridLayoutManager layoutManager = new GridLayoutManager(
-                this,
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
                 3,
-                RecyclerView.HORIZONTAL,
-                false);*/
+                RecyclerView.HORIZONTAL);
 
         //设置布局管理器
         recycler_view.setLayoutManager(layoutManager);
