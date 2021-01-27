@@ -2,6 +2,7 @@ package kim.hsl.recyclerview;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         //2 . 创建并设置布局管理器
         //创建布局管理器
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
 
         //设置布局管理器
         recycler_view.setLayoutManager(layoutManager);
@@ -37,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         Adapter adapter = new Adapter();
         recycler_view.setAdapter(adapter);
     }
-
 
     /**
      * RecyclerView 适配器
@@ -70,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 text = itemView.findViewById(R.id.text);
             }
         }
-
     }
 
 }

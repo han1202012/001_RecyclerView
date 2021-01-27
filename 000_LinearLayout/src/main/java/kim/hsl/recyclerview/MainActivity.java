@@ -23,15 +23,15 @@ public class MainActivity extends AppCompatActivity {
         //1 . 从布局中获取 RecyclerView
         RecyclerView recycler_view = findViewById(R.id.recycler_view);
 
-
         //2 . 创建并设置布局管理器
-        //创建布局管理器
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        //创建布局管理器, 传入 上下文实例 , 方向 , 是否翻转 参数
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+
+        // 横向设置 , 翻转
+        //LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, true);
 
         //设置布局管理器
         recycler_view.setLayoutManager(layoutManager);
-
 
         //3 . 创建并设置列表适配器
         Adapter adapter = new Adapter();
@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 text = itemView.findViewById(R.id.text);
             }
         }
-
     }
 
 }
