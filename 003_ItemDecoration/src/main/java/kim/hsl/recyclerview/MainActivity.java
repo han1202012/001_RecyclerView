@@ -1,5 +1,6 @@
 package kim.hsl.recyclerview;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         //设置布局管理器
         recycler_view.setLayoutManager(layoutManager);
+
+        // 设置边距
+        recycler_view.addItemDecoration(new ItemDecoration());
 
         //3 . 创建并设置列表适配器
         Adapter adapter = new Adapter();
