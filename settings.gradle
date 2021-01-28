@@ -1,2 +1,2 @@
-include ':000_LinearLayout',':001_GridLayout', ':002_StaggeredGridLayout'
+include ':000_LinearLayout',':001_GridLayout', ':002_StaggeredGridLayout', ':003_ItemDecoration'
 rootProject.name='001_RecyclerView'
