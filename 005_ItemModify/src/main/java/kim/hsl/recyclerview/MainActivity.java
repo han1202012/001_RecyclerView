@@ -90,11 +90,11 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.insert_single).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 在集合末尾添加一个元素
-                names.add("戴宗");
+                // 在集合开始添加一个元素
+                names.add(0, "戴宗");
 
                 // 通知适配器新元素添加
-                adapter.notifyItemInserted(names.size() - 1);
+                adapter.notifyItemInserted(0);
             }
         });
 
@@ -102,13 +102,13 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.insert_multi).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 在集合末尾添加多个元素
-                names.add("戴宗");
-                names.add("刘唐");
-                names.add("李逵");
+                // 在集合开始添加多个元素
+                names.add(0, "戴宗");
+                names.add(0, "刘唐");
+                names.add(0, "李逵");
 
                 // 通知适配器多个新元素添加
-                adapter.notifyItemRangeInserted(names.size() - 1, 3);
+                adapter.notifyItemRangeInserted(0, 3);
             }
         });
 
