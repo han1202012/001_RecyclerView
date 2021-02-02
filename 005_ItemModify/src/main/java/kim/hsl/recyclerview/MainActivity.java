@@ -179,6 +179,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 数据改变
+        findViewById(R.id.data_change).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 先移除第 0 个
+                names.remove(0);
+                // 然后在第 7 个位置插入, 此时变为第 7 个元素
+                names.add(7, "宋江");
+
+                // 删除第 0 ~ 2 个元素
+                names.remove(0);
+                names.remove(0);
+                names.remove(0);
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+
 
     }
 
