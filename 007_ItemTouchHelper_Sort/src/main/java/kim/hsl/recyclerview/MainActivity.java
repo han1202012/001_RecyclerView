@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -28,14 +30,19 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recycler_view;
 
     /**
-     * 网格布局管理器
+     * 布局管理器
      */
-    private GridLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
 
     /**
      * 适配器
      */
     private Adapter adapter;
+
+    /**
+     * 添加拖动处理
+     */
+    private ItemTouchHelper mItemTouchHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
         //2 . 创建并设置布局管理器
         //创建布局管理器
-        layoutManager = new GridLayoutManager(
+        layoutManager = new LinearLayoutManager(
                 this,
-                4,
                 RecyclerView.VERTICAL,
                 false);
 
@@ -65,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
         //3 . 创建并设置列表适配器
         adapter = new Adapter();
         recycler_view.setAdapter(adapter);
+
+        //4. 添加拖动事件
+        Callback callback = new Callback();
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        //mItemTouchHelper.attachToRecyclerView(recycler_view);
     }
 
     /**
