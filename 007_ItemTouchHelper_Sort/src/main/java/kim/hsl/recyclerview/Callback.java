@@ -1,32 +1,19 @@
 package kim.hsl.recyclerview;
 
-import android.graphics.Canvas;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class Callback extends ItemTouchHelper.Callback {
 
-    @Override
-    public boolean isLongPressDragEnabled() {
-        return super.isLongPressDragEnabled();
-    }
+    private static final String TAG = "Callback";
 
-    @Override
-    public boolean isItemViewSwipeEnabled() {
-        return super.isItemViewSwipeEnabled();
-    }
+    private MainActivity.Adapter mAdapter;
 
-    @Override
-    public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
-        super.onSelectedChanged(viewHolder, actionState);
-    }
-
-    @Override
-    public void onMoved(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, int fromPos, @NonNull RecyclerView.ViewHolder target, int toPos, int x, int y) {
-        super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
+    public Callback(MainActivity.Adapter mAdapter) {
+        this.mAdapter = mAdapter;
     }
 
     /**
@@ -37,13 +24,40 @@ public class Callback extends ItemTouchHelper.Callback {
      * @return
      */
     @Override
-    public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+    public int getMovementFlags(@NonNull RecyclerView recyclerView,
+                                @NonNull RecyclerView.ViewHolder viewHolder) {
         // 设置拖动方向, 此处设置上下拖动事件
         int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
         // 设置滑动方向, 此处设置左右侧滑事件
         int swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
         // 应用 拖动 和 滑动 设置
         return makeMovementFlags(dragFlags, swipeFlags);
+    }
+
+    /*
+        以下是拖动相关方法
+     */
+
+    /**
+     * 是否启用长按拖动功能
+     * @return
+     */
+    @Override
+    public boolean isLongPressDragEnabled() {
+        return true;
+    }
+
+    /**
+     * 拖动幅度设置
+     * 组件在宽度 / 高度 上移动超过该比例 , 就认为拖动触发, 执行拖动相关操作
+     * @param viewHolder
+     * @return
+     */
+    @Override
+    public float getMoveThreshold(@NonNull RecyclerView.ViewHolder viewHolder) {
+        // 该案例中, 拖动操作只能上下进行
+        // 拖动超过条目组件高度超过 0.9 倍, 即可触发拖动操作
+        return 0.9f;
     }
 
     /**
@@ -55,28 +69,46 @@ public class Callback extends ItemTouchHelper.Callback {
      * @return
      */
     @Override
-    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-        return false;
+    public boolean onMove(@NonNull RecyclerView recyclerView,
+                          @NonNull RecyclerView.ViewHolder viewHolder,
+                          @NonNull RecyclerView.ViewHolder target) {
+        // 拖动后交换数据, 该方法中交换 Adapter 中的数据, 并刷新界面
+        Log.i(TAG, "触发拖动交换条目");
+        mAdapter.changeItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+        return true;
+    }
+
+    /*
+        以下是滑动相关方法
+     */
+
+    /**
+     * 是否启用滑动操作
+     * @return 是否启用 true 启用, false 不启用
+     */
+    @Override
+    public boolean isItemViewSwipeEnabled() {
+        return true;
     }
 
     /**
-     * 用户滑动距离, 设置的是比例值, 返回值为 0.2 , 就意味着滑动宽高的 1/5
+     * 用户滑动距离, 设置的是比例值, 返回值为 0.5 , 就意味着滑动宽度/高度的一半, 才触发侧滑 onSwiped 方法
      * @param viewHolder
      * @return
      */
     @Override
     public float getSwipeThreshold(@NonNull RecyclerView.ViewHolder viewHolder) {
-        return 0.2f;
+        return 0.5f;
     }
 
     /**
-     * 滑动消失距离, 小于该值不消失, 大于该值消失
+     * 滑动判定速度, 每秒移动的像素个数, 达到该速度后, 才可以被判定为滑动
      * @param defaultValue
      * @return
      */
     @Override
     public float getSwipeEscapeVelocity(float defaultValue) {
-        return 10f;
+        return 5000f;
     }
 
     /**
@@ -88,7 +120,9 @@ public class Callback extends ItemTouchHelper.Callback {
      * @return
      */
     @Override
-    public long getAnimationDuration(@NonNull RecyclerView recyclerView, int animationType, float animateDx, float animateDy) {
+    public long getAnimationDuration(@NonNull RecyclerView recyclerView,
+                                     int animationType,
+                                     float animateDx, float animateDy) {
         return 200L;
     }
 
@@ -99,17 +133,10 @@ public class Callback extends ItemTouchHelper.Callback {
      */
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+        Log.i(TAG, "触发侧滑删除条目");
         // 滑动指定的距离, 达到一定幅度后, 就会触发该方法回调
         // 这里做的是滑动删除功能, 直接删除滑动项
-    }
-
-    @Override
-    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-    }
-
-    @Override
-    public void onChildDrawOver(@NonNull Canvas c, @NonNull RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        // 该方法中删除指定条目, 并刷新界面
+        mAdapter.deleteItem(viewHolder.getAdapterPosition());
     }
 }

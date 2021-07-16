@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,9 +75,10 @@ public class MainActivity extends AppCompatActivity {
         recycler_view.setAdapter(adapter);
 
         //4. 添加拖动事件
-        Callback callback = new Callback();
+        Callback callback = new Callback(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
-        //mItemTouchHelper.attachToRecyclerView(recycler_view);
+        mItemTouchHelper.attachToRecyclerView(recycler_view);
+
     }
 
     /**
@@ -108,6 +111,14 @@ public class MainActivity extends AppCompatActivity {
      */
     public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
+        private RecyclerView mRecyclerView;
+
+        @Override
+        public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+            super.onAttachedToRecyclerView(recyclerView);
+            this.mRecyclerView = recyclerView;
+        }
+
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View root_view = LayoutInflater.from(MainActivity.this)
@@ -131,6 +142,27 @@ public class MainActivity extends AppCompatActivity {
                 super(itemView);
                 text = itemView.findViewById(R.id.text);
             }
+        }
+
+        /**
+         * 删除元素调用的方法
+         * @param position
+         */
+        public void deleteItem(int position) {
+            names.remove(position);
+            notifyItemRemoved(position);
+        }
+
+        /**
+         * 交换条目元素
+         * @param srcPosition
+         * @param dstPosition
+         */
+        public void changeItem(int srcPosition, int dstPosition) {
+            // 交换集合中两个元素位置
+            Collections.swap(names, srcPosition, dstPosition);
+            // 刷新界面显示
+            notifyItemMoved(srcPosition, dstPosition);
         }
     }
 
