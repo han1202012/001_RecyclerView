@@ -1,2 +1,2 @@
-include ':000_LinearLayout',':001_GridLayout', ':002_StaggeredGridLayout', ':003_ItemDecoration', ':004_ItemViewType', ':005_ItemModify', ':006_SpanSizeLookup', ':007_ItemTouchHelper_Sort'
+include ':000_LinearLayout',':001_GridLayout', ':002_StaggeredGridLayout', ':003_ItemDecoration', ':004_ItemViewType', ':005_ItemModify', ':006_SpanSizeLookup', ':007_ItemTouchHelper_Sort', ':008_ItemTouchHelper_Custom'
 rootProject.name='001_RecyclerView'
